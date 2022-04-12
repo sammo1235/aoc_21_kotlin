@@ -1,0 +1,1 @@
+/home/sammo/IdeaProjects/AOC_2022/build/classes/kotlin/main/Day1.class:/home/sammo/IdeaProjects/AOC_2022/build/classes/kotlin/main/MainKt.class:/home/sammo/IdeaProjects/AOC_2022/build/classes/kotlin/main/Sample.class
