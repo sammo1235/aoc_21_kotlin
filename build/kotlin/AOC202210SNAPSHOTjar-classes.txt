@@ -1,1 +1,1 @@
-/home/sammo/IdeaProjects/AOC_2022/build/classes/kotlin/main/Day1.class:/home/sammo/IdeaProjects/AOC_2022/build/classes/kotlin/main/MainKt.class:/home/sammo/IdeaProjects/AOC_2022/build/classes/kotlin/main/Sample.class
+/home/sammo/src/aoc_21_kotlin/build/classes/kotlin/main/Day1.class:/home/sammo/src/aoc_21_kotlin/build/classes/kotlin/main/Day2.class:/home/sammo/src/aoc_21_kotlin/build/classes/kotlin/main/Day3.class:/home/sammo/src/aoc_21_kotlin/build/classes/kotlin/main/MainKt.class:/home/sammo/src/aoc_21_kotlin/build/classes/kotlin/main/Sample.class

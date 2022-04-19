@@ -19,6 +19,19 @@ internal class Day2Solutions {
     @Test
     fun testDay2() {
         val expectedPartOne: Int = 2039256;
+        val expectedPartTwo: Int = 1856459736;
+
+        assertEquals(expectedPartOne, testSample.partOne())
+        assertEquals(expectedPartTwo, testSample.partTwo())
+    }
+}
+
+internal class Day3Solutions {
+    private val testSample: Day3 = Day3()
+
+    @Test
+    fun testDay3() {
+        val expectedPartOne: Int = 775304;
 
         assertEquals(expectedPartOne, testSample.partOne())
     }
