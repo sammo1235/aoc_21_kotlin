@@ -32,7 +32,8 @@ internal class Day3Solutions {
     @Test
     fun testDay3() {
         val expectedPartOne: Int = 775304;
-
+        val expectedPartTwo: Int = 1370737;
         assertEquals(expectedPartOne, testSample.partOne())
+        assertEquals(expectedPartTwo, testSample.partTwo())
     }
 }

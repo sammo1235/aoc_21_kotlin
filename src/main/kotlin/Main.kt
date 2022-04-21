@@ -97,25 +97,59 @@ class Day3 {
         val data = data(3)
         val row = data.size
         val column = data[0].length
+        var transposed = transposeArray(data)
+
+        var gamma: String = ""
+        var epsilon: String = ""
+        for (i in 0 until column) {
+            var transposedLine = transposed[i]
+            val tally = transposed[i].toCollection(ArrayList()).groupingBy { it }.eachCount().toList().sortedBy { (_, value) -> value }
+            gamma = gamma.plus(tally[1].first.toString())
+            epsilon = epsilon.plus(tally[0].first.toString())
+        }
+        return gamma.toInt(2) * epsilon.toInt(2)
+    }
+
+    fun partTwo(): Int {
+        var data = data(3)
+        val oxy = calculate(data, "oxygen", '1')
+        val co2 = calculate(data, "co2", '0')
+        return oxy.toInt(2) * co2.toInt(2);
+    }
+
+    fun calculate(data: List<String>, method: String, precedence: Char): String {
+        var dat = data
+        while(dat.size > 1) {
+            loop@ for (i in dat.indices) {
+                var transposed = transposeArray(dat)
+                var transposedLine = transposed[i]
+                val tally = transposed[i].toCollection(ArrayList()).groupingBy { it }.eachCount().toList().sortedBy { (_, value) -> value }
+                dat = if (tally[0].second == tally[1].second) {
+                    dat.filter { it[i] == precedence }
+                } else {
+                    if (method == "oxygen") { // most occurrences stay
+                        dat.filter { it[i].digitToInt() == tally[1].first }
+                    } else {                  // least occurrences stay
+                        dat.filter { it[i].digitToInt() == tally[0].first }
+                    }
+                }
+                if (dat.size == 1) {
+                    break@loop
+                }
+            }
+        }
+        return dat[0]
+    }
+
+    fun transposeArray(array: List<String>): Array<IntArray> {
+        val row = array.size
+        val column = array[0].length
         var transpose = Array(column) { IntArray(row) }
         for (i in 0 until row) {
             for (j in 0 until column) {
-                transpose[j][i] = data[i].toCharArray()[j].digitToInt()
+                transpose[j][i] = array[i].toCharArray()[j].digitToInt()
             }
         }
-        var combine1: String = ""
-        var combine2: String = ""
-        for (k in 0 until column) {
-            val zeros = transpose[k].contentToString().filter { it == '0' }.count()
-            val ones = transpose[k].contentToString().filter { it == '1' }.count()
-            if (zeros > ones) {
-                combine1 = combine1.plus("0")
-                combine2 = combine2.plus("1")
-            } else {
-                combine1 = combine1.plus("1")
-                combine2 = combine2.plus("0")
-            }
-        }
-        return combine1.toInt(2) * combine2.toInt(2)
+        return transpose;
     }
 }
