@@ -117,7 +117,7 @@ class Day3 {
         return oxy.toInt(2) * co2.toInt(2);
     }
 
-    fun calculate(data: List<String>, method: String, precedence: Char): String {
+    private fun calculate(data: List<String>, method: String, precedence: Char): String {
         var dat = data
         while(dat.size > 1) {
             loop@ for (i in dat.indices) {
@@ -127,11 +127,7 @@ class Day3 {
                 dat = if (tally[0].second == tally[1].second) {
                     dat.filter { it[i] == precedence }
                 } else {
-                    if (method == "oxygen") { // most occurrences stay
-                        dat.filter { it[i].digitToInt() == tally[1].first }
-                    } else {                  // least occurrences stay
-                        dat.filter { it[i].digitToInt() == tally[0].first }
-                    }
+                    dat.filter { it[i].digitToInt() == tally[if (method == "oxygen") 1 else 0].first }
                 }
                 if (dat.size == 1) {
                     break@loop
@@ -141,7 +137,7 @@ class Day3 {
         return dat[0]
     }
 
-    fun transposeArray(array: List<String>): Array<IntArray> {
+    private fun transposeArray(array: List<String>): Array<IntArray> {
         val row = array.size
         val column = array[0].length
         var transpose = Array(column) { IntArray(row) }
@@ -151,5 +147,11 @@ class Day3 {
             }
         }
         return transpose;
+    }
+}
+
+class Day4 {
+    fun partOne(): Int {
+        
     }
 }
