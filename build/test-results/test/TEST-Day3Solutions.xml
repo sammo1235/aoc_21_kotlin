@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Day3Solutions" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-04-21T17:08:37" hostname="ilia" time="0.08">
-  <properties/>
-  <testcase name="testDay3()" classname="Day3Solutions" time="0.08"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

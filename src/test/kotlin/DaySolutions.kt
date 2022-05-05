@@ -37,3 +37,15 @@ internal class Day3Solutions {
         assertEquals(expectedPartTwo, testSample.partTwo())
     }
 }
+
+internal class Day4Solutions {
+    private val testSample: Day4 = Day4()
+
+    @Test
+    fun testDay4() {
+        val expectedPartOne: Int = 38594;
+//        val expectedPartTwo: Int = 1370737;
+        assertEquals(expectedPartOne, testSample.partOne())
+//        assertEquals(expectedPartTwo, testSample.partTwo())
+    }
+}

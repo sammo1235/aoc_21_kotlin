@@ -95,14 +95,11 @@ class Day2 {
 class Day3 {
     fun partOne(): Int {
         val data = data(3)
-        val row = data.size
-        val column = data[0].length
         var transposed = transposeArray(data)
 
         var gamma: String = ""
         var epsilon: String = ""
-        for (i in 0 until column) {
-            var transposedLine = transposed[i]
+        for (i in 0 until data[0].length) {
             val tally = transposed[i].toCollection(ArrayList()).groupingBy { it }.eachCount().toList().sortedBy { (_, value) -> value }
             gamma = gamma.plus(tally[1].first.toString())
             epsilon = epsilon.plus(tally[0].first.toString())
@@ -122,7 +119,6 @@ class Day3 {
         while(dat.size > 1) {
             loop@ for (i in dat.indices) {
                 var transposed = transposeArray(dat)
-                var transposedLine = transposed[i]
                 val tally = transposed[i].toCollection(ArrayList()).groupingBy { it }.eachCount().toList().sortedBy { (_, value) -> value }
                 dat = if (tally[0].second == tally[1].second) {
                     dat.filter { it[i] == precedence }
@@ -152,6 +148,83 @@ class Day3 {
 
 class Day4 {
     fun partOne(): Int {
-        
+        val data = data(4)
+        val called = data[0].split(",")
+        var bingo = false;
+        var winningNo: Int = 0
+        var total = 0
+        val boards = grabBoards(data.slice(1 until(data.size-1)));
+        loop1@ for (calledNumber in called) {
+            run breaking3@ {
+                boards.forEach { entry ->
+                    run breaking2@ {
+                        entry.value.forEach { element ->
+                            run breaking1@ {
+                                element.forEachIndexed { index, pairing ->
+                                    if(pairing.first == calledNumber) {
+                                        element[index] = pairing.copy(first = pairing.first, true)
+                                    }
+                                    if (winningLineOrColumn(element, entry.value, index)) {
+                                        winningNo = calledNumber.toInt()
+                                        bingo = true
+                                        total = getTotal(entry.value)
+                                    }
+                                    if (bingo) return@breaking1
+                                }
+                            }
+                            if (bingo) return@breaking2
+                        }
+                    }
+                    if (bingo) return@breaking3
+                }
+            }
+            if (bingo) break@loop1
+        }
+        return total * winningNo
+    }
+
+    private fun getTotal(lines: MutableList<MutableList<Pair<String, Boolean>>>): Int {
+        return lines.fold(0) { sum, el -> sum + el.filter{ !it.second }.fold(0) { sum, el1 -> sum + el1.first.toInt() }}
+    }
+
+    private fun transpose(data: MutableList<MutableList<Pair<String, Boolean>>>): MutableList<MutableList<Pair<String, Boolean>>> {
+        // this takes a matrix of 5x5 and transposes it whilst removing any blank tiles
+        val newLines: MutableList<MutableList<Pair<String, Boolean>>> = MutableList(5) { mutableListOf(Pair("0", false), Pair("0", false),Pair("0", false),Pair("0", false),Pair("0", false)) }
+        for (i in 0 until data.size) {
+            for (j in 0 until data[i].size) {
+                if (data[i][j] == Pair("", false)) {
+                } else {
+                    newLines[j][i] = data[i][j]
+                }
+            }
+        }
+        return newLines
+    }
+
+    fun winningLineOrColumn(line: MutableList<Pair<String, Boolean>>, lines: MutableList<MutableList<Pair<String, Boolean>>>, idx: Int): Boolean {
+        if (!line.map { it.second }.distinct().contains(false)) {
+            return true
+        } else if (!transpose(lines)[idx].map {it.second}.contains(false)) {
+            return true
+        }
+        return false
+     }
+
+    fun grabBoards(data: List<String>): Map<Int, MutableList<MutableList<Pair<String, Boolean>>>> {
+        var boards : Map<Int, MutableList<MutableList<Pair<String, Boolean>>>> = mutableMapOf<Int, MutableList<MutableList<Pair<String, Boolean>>>>()
+        var n = 0;
+
+        var tempList = mutableListOf<MutableList<Pair<String, Boolean>>>()
+        data.map { it.split("\\s+".toRegex()).map { Pair(it, false) }.filter { it.first != ""}.toMutableList()}.forEach {
+            if(it.size == 0) {
+                n += 1
+                boards = boards.plus(n to tempList)
+                tempList = mutableListOf<MutableList<Pair<String, Boolean>>>()
+            } else {
+                tempList.add(it)
+            }
+        }
+        return boards;
     }
 }
+
